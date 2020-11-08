@@ -1,1 +1,1 @@
-# EmpWage.JS
+Employee Wage Computation - JavaScript
