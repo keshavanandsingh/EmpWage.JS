@@ -26,6 +26,7 @@ function calulateWage(employeeHours) {
 let totalEmpHours = 0;
 let totalWorkingDays = 0;
 let employeeDailyWageArray = new Array();
+let employeeDailyWageMap = new Map();
 while (totalEmpHours <= MAX_HOURS_IN_A_MONTH && totalWorkingDays < NUM_OF_WORKING_DAYS) {
     totalWorkingDays++;
     let empCheck = Math.floor(Math.random() * 10) % 3;
@@ -33,6 +34,7 @@ while (totalEmpHours <= MAX_HOURS_IN_A_MONTH && totalWorkingDays < NUM_OF_WORKIN
     employeeDailyWageArray.push(calulateWage(empHours));
     totalEmpHours += empHours;
     if(totalEmpHours > 160 ) totalEmpHours = 160;
+    employeeDailyWageMap.set(totalWorkingDays, calulateWage(empHours));
 }
 
 // Total Wage Using Array forEach or Reduce method
@@ -87,3 +89,8 @@ function totalDaysWorked(numberOfDays, dailyWage) {
     return numberOfDays;
 }
 console.log("Number Of Days Employee Worked: " + employeeDailyWageArray.reduce(totalDaysWorked,0));
+
+// Print Employee Daily Wage Map and Total Wage using the Daily Wage Map
+console.log(employeeDailyWageMap);
+console.log("Employee Total Wage : " + 
+            Array.from(employeeDailyWageMap.values()).reduce(totalWages, 0));
