@@ -1,10 +1,4 @@
 class EmployeePayrollData {
-    // properties
-    id;
-    salary;
-    gender;
-    startDate;
-
     // constructor
     constructor(...parameters) {
         this.id = parameters[0];
@@ -26,13 +20,64 @@ class EmployeePayrollData {
         else throw "Incorrect Name!";
     }
 
+    get id() {
+        return this._id;
+    }
+    set id(id) {
+        let idRegex = RegExp('^[1-9]{1}[0,9]{0,}$');
+        if (idRegex.test(id)) {
+            this._id = id;
+        } 
+        else throw "Incorrect Id!";
+    }
+
+    get salary() {
+        return this._salary;
+    }
+    set salary(salary) {
+        let salaryRegex = RegExp('^[1-9]{1}[0-9]{0,}$');
+        if (salaryRegex.test(salary)) {
+            this._salary = salary;
+        } 
+        else throw "Incorrect Salary!";
+    }
+
+    get gender() {
+        return this._gender;
+    }
+    set gender(gender) {
+        if (gender == undefined) {
+            this._gender = "M";
+        } else {
+            let genderRegex = RegExp('^[MF]{1}$');
+            if (genderRegex.test(gender)) {
+                this._gender = gender;
+            } else {
+               throw "Incorrect Gender!";
+            }   
+        }
+    }
+
+    get startDate() {
+        return this._startDate;
+    }
+    set startDate(date) {
+        if (date != undefined) {
+            if (date <= new Date()) {
+                const options = { year: "numeric", month: "long", day: "numeric"};
+                const employeeDate = date === undefined ? "undefined" :
+                                date.toLocaleDateString("en-US", options);
+                this._startDate = employeeDate;
+            }
+            else throw "Invalid Date";
+        }
+    }
+
     // method
     toString() {
-        const options = { year: "numeric", month: "long", day: "numeric"};
-        const employeeDate = this.startDate === undefined ? "undefined" :
-                                this.startDate.toLocaleDateString("en-US", options);
+        
         return "id=" + this.id + ", name=" + this.name + ", salary=" + this.salary +
-                ", gender=" + this.gender + ", startDate=" + employeeDate;
+                ", gender=" + this.gender + ", startDate=" + this.startDate;
     }
 }
 
@@ -44,5 +89,33 @@ try {
 } catch (error) {
     console.error(error);
 }
-let newEmployeePayrollData = new EmployeePayrollData(2, "Rachel", 40000, "F", new Date());
+
+let newEmployeePayrollData = new EmployeePayrollData(1, "Rachel", 40000, "F", new Date());
 console.log(newEmployeePayrollData.toString());
+try {
+    newEmployeePayrollData.id = 2;
+    console.log(newEmployeePayrollData.toString());
+} catch (error) {
+    console.error(error);
+}
+
+try {
+    newEmployeePayrollData.salary = 45000;
+    console.log(newEmployeePayrollData.toString());
+} catch (error) {
+    console.error(error);
+}
+
+try {
+    newEmployeePayrollData.gender = "F";
+    console.log(newEmployeePayrollData.toString());
+} catch (error) {
+    console.error(error);
+}
+
+try {
+    newEmployeePayrollData.startDate = new Date("2020-11-8");
+    console.log(newEmployeePayrollData.toString());
+} catch (error) {
+    console.error(error);
+}
